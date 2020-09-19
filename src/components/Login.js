@@ -55,4 +55,4 @@ const Error = styled.div`
   background-color: red;
 `;
 
-export { Form, Input, Button, Logo, Card, Error, LoginContainer };
+export { Form, Input, Button, Card, Error, LoginContainer };

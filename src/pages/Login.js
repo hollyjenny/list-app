@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Logo, Form, Input, Button } from '../components/Login';
+import { Card, Form, Input, Button } from '../components/Login';
 
 function Login() {
   return (
@@ -7,7 +7,7 @@ function Login() {
       <Form>
         <Input type="email" placeholder="Email address" />
         <Input type="password" placeholder="Password" />
-        <Button>Sign In</Button>
+        <Button id='fetch-login'>Sign In</Button>
       </Form>
     </Card>
   );
