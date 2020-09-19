@@ -1,8 +1,7 @@
 import styled from 'styled-components';
 
-const Card = styled.div`
+const Container = styled.div`
   box-sizing: border-box;
-  max-width: 410px;
   margin: 0 auto;
   padding: 0 2rem;
   display: flex;
@@ -21,6 +20,7 @@ const LoginContainer = styled.div`
 
 
 const Form = styled.div`
+  max-width: 410px;
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -55,4 +55,4 @@ const Error = styled.div`
   background-color: red;
 `;
 
-export { Form, Input, Button, Card, Error, LoginContainer };
+export { Form, Input, Button, Container, Error, LoginContainer };
