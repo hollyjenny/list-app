@@ -18,7 +18,6 @@ const LoginContainer = styled.div`
   width: 100%;
 `;
 
-
 const Form = styled.div`
   max-width: 410px;
   display: flex;
@@ -44,11 +43,6 @@ const Button = styled.button`
   width: 100%;
   margin-bottom: 1rem;
   font-size: 1rem;
-`;
-
-const Logo = styled.img`
-  width: 50%;
-  margin-bottom: 1rem;
 `;
 
 const Error = styled.div`

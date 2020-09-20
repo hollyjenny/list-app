@@ -2,7 +2,6 @@ import React, { useState, useEffect, Fragment } from "react"
 import { Container } from '../components/Login';
 import { getListItems } from '../libs/api/users';
 
-
 function List(props) {
   /**
    * @description execute getApiUsers function - mirage api with list items

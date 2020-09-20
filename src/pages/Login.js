@@ -1,38 +1,68 @@
-import React, { useState, useEffect } from "react"
+import React, { useState } from "react";
+import { BrowserRouter as Router, Link } from "react-router-dom";
 import { Container, Form, Input, Button } from '../components/Login';
-import { getApiUsers } from '../libs/api/users';
+import PrivateRoute from '../PrivateRoute';
+//import { getApiUsers } from '../libs/api/users';
+import { AuthContext } from "../context/auth";
+import List from "../pages/List";
 
 function Login() {
 
-  /**
-  * @description execute getApiUsers function - mirage api with list items
-  */
-  getApiUsers();
+  // /**
+  // * @description execute getApiUsers function - mirage api with list items
+  // */
+  // getApiUsers();
 
-  /**
-   * @description fetch and create json file of items from mirage server
-   */
-  let [users, setUsers] = useState([])
+  // /**
+  //  * @description fetch and create json file of items from mirage server
+  //  */
+  // let [users, setUsers] = useState([])
 
-  useEffect(() => {
-    fetch('/api/users')
-      .then((res) => res.json())
-      .then((json) => {
-        setUsers(json.users)
-      })
-  }, []);
+  // useEffect(() => {
+  //   fetch('/api/users')
+  //   .then(response => {
+  //     if (!response.ok) throw Error(response.statusText);
+  //     return response.json();
+  //   })
+  //     .then((json) => {
+  //       setUsers(json.users);
+  //     })
+  // }, []);
 
-  console.log(users);
+  const [isbuttonClicked, setIsbuttonClicked] = useState(false);
+
 
   return (
-    <Container>
-      <Form>
-        <Input type="email" placeholder="Email address" />
-        <Input type="password" placeholder="Password" />
-        <Button id='fetch-login'>Sign In</Button>
-      </Form>
-    </Container>
-  );
-}
+    // AuthContext Value to be set to default false when logic is in place
+    <AuthContext.Provider value={true}>
+      <Router>
+      {!isbuttonClicked &&
+        <Container>
+          <Form>
+            <Input type="email" placeholder="Email address" />
+            <Input type="password" placeholder="Password" />
+            <Link to="/list">
+              <Button
+                renderAs="Link"
+                id='fetch-login'
+                onClick={() => {
+                  // set auth context to true - compare to json
+                  setIsbuttonClicked(true);
+                  console.log('clicked');
+                }}>
+                Sign In
+              </Button>
+            </Link>
+          </Form>
+        </Container>
+        }
+        {isbuttonClicked &&
+          <PrivateRoute path="/list" component={List} />
+        }
+      </Router>
+    </AuthContext.Provider>
 
-export default Login;
+    );
+  }
+  
+  export default Login;

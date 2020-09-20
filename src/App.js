@@ -4,12 +4,9 @@ import { LoginContainer, Container, Button } from './components/Login';
 import PrivateRoute from './PrivateRoute';
 import Login from "./pages/Login";
 import List from "./pages/List";
-import { AuthContext } from "./context/auth";
 
 function App(props) {
   return (
-    // AuthContext Value to be set to default false when logic is in place
-    <AuthContext.Provider value={true}>
       <Router>
         <div>
           <LoginContainer>
@@ -27,7 +24,6 @@ function App(props) {
         <Route path ='/login' component={Login}/>
         <PrivateRoute path="/list" component={List} />
       </Router>
-    </AuthContext.Provider>
   );
 }
 
