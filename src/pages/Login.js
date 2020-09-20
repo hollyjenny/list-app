@@ -1,58 +1,69 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Link } from "react-router-dom";
-import { Container, Form, Input, Button } from '../components/Login';
+import { Container, Form, Input, SubmitButton } from '../components/Login';
 import PrivateRoute from '../PrivateRoute';
-//import { getApiUsers } from '../libs/api/mirageServers';
-import { AuthContext } from "../context/auth";
+import { getApiUsers } from '../libs/api/mirageServers';
 import List from "../pages/List";
+import { useAuth } from "../context/auth";
 
 function Login() {
+  /**
+  * @description execute getApiUsers function - fetch and create json file of items from mirage server
+  */
+  getApiUsers();
 
-  // /**
-  // * @description execute getApiUsers function - mirage api with list items
-  // */
-  // getApiUsers();
-
-  // /**
-  //  * @description fetch and create json file of items from mirage server
-  //  */
-  // let [users, setUsers] = useState([])
-
-  // useEffect(() => {
-  //   fetch('/api/users')
-  //   .then(response => {
-  //     if (!response.ok) throw Error(response.statusText);
-  //     return response.json();
-  //   })
-  //     .then((json) => {
-  //       setUsers(json.users);
-  //     })
-  // }, []);
+  const { setAuthTokens } = useAuth();
 
   const [isbuttonClicked, setIsbuttonClicked] = useState(false);
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
 
+  const handleUsernameChange = (event) => {
+    setUsername(event.target.value);
+  };
+
+  const handlePasswordChange = (event) => {
+    setPassword(event.target.value);
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    fetch('/api/users')
+    .then(response => {
+      if (!response.ok) throw Error(response.statusText);
+      return response;
+    })
+    .then((response) => {
+      if (response.status === 200) {
+        setAuthTokens(response.data);
+        setIsbuttonClicked(true);
+      }
+      console.log(response.users);
+    })
+    //const payload = { name: username, password: password};
+  }
 
   return (
-    // AuthContext Value to be set to default false when logic is in place
-    <AuthContext.Provider value={true}>
       <Router>
       {!isbuttonClicked &&
         <Container>
-          <Form>
-            <Input type="email" placeholder="Email address" />
-            <Input type="password" placeholder="Password" />
-            <Link to="/list">
-              <Button
-                renderAs="Link"
-                id='fetch-login'
-                onClick={() => {
-                  // set auth context to true - compare to json
-                  setIsbuttonClicked(true);
-                  console.log('clicked');
-                }}>
-                Sign In
-              </Button>
-            </Link>
+          <Form onSubmit={handleSubmit}>
+            <Input
+              type="email"
+              placeholder="Email address"
+              value={username}
+              onChange={handleUsernameChange}
+            />
+            <Input
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={handlePasswordChange}
+            />
+            <SubmitButton
+              type="submit"
+              value="Sign In"
+            />
           </Form>
         </Container>
         }
@@ -60,8 +71,6 @@ function Login() {
           <PrivateRoute path="/list" component={List} />
         }
       </Router>
-    </AuthContext.Provider>
-
     );
   }
   

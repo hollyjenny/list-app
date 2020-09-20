@@ -7,11 +7,7 @@ export async function getApiUsers () {
     let server = new Server();
 
     return(
-        server.get("/api/users", { users: [
-        { id: 1, name: "LukeGreene", pass: "Duggee" },
-        { id: 2, name: "HollyGreene", pass: "Cake" },
-        { id: 3, name: "SteveGreene", pass: "Football" }
-        ] })
+            server.get("/api/users", { users: [{ id: 1, name: "luke.greene@email.com", pass: "Duggee" }] })
     );
 };
 
