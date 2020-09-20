@@ -1,6 +1,6 @@
 import React, { useState, useEffect, Fragment } from "react"
 import { Container } from '../components/Login';
-import { getListItems } from '../libs/api/users';
+import { getListItems } from '../libs/api/mirageServers';
 
 function List(props) {
   /**

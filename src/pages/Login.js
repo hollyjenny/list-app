@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { BrowserRouter as Router, Link } from "react-router-dom";
 import { Container, Form, Input, Button } from '../components/Login';
 import PrivateRoute from '../PrivateRoute';
-//import { getApiUsers } from '../libs/api/users';
+//import { getApiUsers } from '../libs/api/mirageServers';
 import { AuthContext } from "../context/auth";
 import List from "../pages/List";
 

@@ -17,7 +17,7 @@ export async function getApiUsers () {
 
 export async function getListItems () {
     /**
-     * @description create mirage api with usernames and passwords
+     * @description create mirage api list items
      */
     let server = new Server();
 
