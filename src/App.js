@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Link, Route } from "react-router-dom";
-import { LoginContainer, Container, Button } from './components/Login';
+import { LoginContainer, Container, Button } from './components/styledComponents';
 import PrivateRoute from './PrivateRoute';
 import Login from "./pages/Login";
 import List from "./pages/List";
@@ -8,11 +8,9 @@ import { AuthContext } from "./context/auth";
 
 function App(props) {
 
-  // const existingTokens = JSON.parse(localStorage.getItem("tokens"));
-  const existingTokens = 'existingTokens';
-
+  // Set Tokens for login authentition
+  const existingTokens = JSON.parse(localStorage.getItem("tokens"));
   const [authTokens, setAuthTokens] = useState(existingTokens);
-  
   const setTokens = (data) => {
     localStorage.setItem("tokens", JSON.stringify(data));
     setAuthTokens(data);
@@ -30,7 +28,7 @@ function App(props) {
               </Link>
             </LoginContainer>
             <Container>
-              <h1>List Header</h1>
+              <h1>Holly Greene List-App</h1>
             </Container>
           </div>
 

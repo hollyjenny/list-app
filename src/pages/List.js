@@ -1,16 +1,13 @@
 import React, { useState, useEffect, Fragment } from "react"
-import { Container } from '../components/Login';
-import { getListItems } from '../libs/api/mirageServers';
+import { Container } from '../components/styledComponents';
+import { getServer } from '../libs/api/mirageServers';
 
 function List(props) {
   /**
-   * @description execute getApiUsers function - mirage api with list items
+   * @description execute getApiUsers function - fetch and create json file of items from mirage server
    */
-  getListItems();
+  getServer();
 
-  /**
-   * @description fetch and create json file of items from mirage server
-   */
   let [listItems, setListItems] = useState([])
 
   useEffect(() => {

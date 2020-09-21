@@ -1,17 +1,6 @@
 import { Server } from "miragejs"
 
-export async function getApiUsers () {
-    /**
-     * @description create mirage api with usernames and passwords
-     */
-    let server = new Server();
-
-    return(
-            server.get("/api/users", { users: [{ id: 1, name: "luke.greene@email.com", pass: "Duggee" }] })
-    );
-};
-
-export async function getListItems () {
+export async function getServer () {
     /**
      * @description create mirage api list items
      */
@@ -24,6 +13,7 @@ export async function getListItems () {
         { id: 3, desc: "Hard worker" },
         { id: 4, desc: "Willing to give anything a bash and learn from it" },
         { id: 5, desc: "Likes to finish a list on the number 5" }
-    ] })
+    ] }),
+        server.get("/api/users", { users: [{ id: 1, name: "luke.greene", pass: "Duggee" }] })
     );
 };

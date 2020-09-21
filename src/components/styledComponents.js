@@ -57,7 +57,11 @@ const SubmitButton = styled.input`
 `;
 
 const Error = styled.div`
-  background-color: red;
+  background-color: rgb(231, 231, 231);
+  border-radius: 5px;
+  /* padding: 15px; Add padding back in when logic to hide/show is added */
+  margin-bottom: 20px;
+  color: #e4200e;
 `;
 
 export { Form, Input, Button, SubmitButton, Container, Error, LoginContainer };

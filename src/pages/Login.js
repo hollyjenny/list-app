@@ -1,77 +1,103 @@
 import React, { useState } from "react";
-import { BrowserRouter as Router, Link } from "react-router-dom";
-import { Container, Form, Input, SubmitButton } from '../components/Login';
-import PrivateRoute from '../PrivateRoute';
-import { getApiUsers } from '../libs/api/mirageServers';
-import List from "../pages/List";
+import { Redirect } from "react-router-dom";
+import { Container, Form, Input, SubmitButton, Error } from '../components/styledComponents';
+import { getServer } from '../libs/api/mirageServers';
 import { useAuth } from "../context/auth";
 
 function Login() {
-  /**
-  * @description execute getApiUsers function - fetch and create json file of items from mirage server
-  */
-  getApiUsers();
 
+  //execute getApiUsers function - fetch and create json file of items from mirage server
+  getServer();
+
+  // Set token
   const { setAuthTokens } = useAuth();
 
-  const [isbuttonClicked, setIsbuttonClicked] = useState(false);
+  //Set state for logged in - default false and set to true if api response ok
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  // Set useState for username and password
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
+  // Set username onChange of input
   const handleUsernameChange = (event) => {
     setUsername(event.target.value);
   };
 
+  // Set password onChange of input
   const handlePasswordChange = (event) => {
     setPassword(event.target.value);
   };
 
+  // Create empty object to setErrors
+  const [errors, setErrors] = useState({});
+
+  // Add errors to object for username and password
+  const validation = () => {
+    let errors = {};
+    const usernameErrMsg = 'Please enter Username';
+    const passwordErrMsg = 'Please enter Password';
+    errors.username = (username.length <= 0) ? usernameErrMsg : '';
+    errors.password = (password.length <= 0) ? passwordErrMsg : '';
+
+    setErrors(errors);
+    if (!(errors.username === usernameErrMsg) && !(errors.password === passwordErrMsg)) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  };
+
+  // on submit - if api response is ok - set token to allow access to list
   const handleSubmit = (event) => {
     event.preventDefault();
+    validation();
     fetch('/api/users')
     .then(response => {
       if (!response.ok) throw Error(response.statusText);
       return response;
     })
     .then((response) => {
-      if (response.status === 200) {
-        setAuthTokens(response.data);
-        setIsbuttonClicked(true);
+      if (validation()) {
+        setAuthTokens('MockToken');
+        setIsLoggedIn(true);
       }
-      console.log(response.users);
     })
-    //const payload = { name: username, password: password};
+  };
+
+  if (isLoggedIn) {
+    return <Redirect to="/list" />;
   }
 
   return (
-      <Router>
-      {!isbuttonClicked &&
-        <Container>
-          <Form onSubmit={handleSubmit}>
-            <Input
-              type="email"
-              placeholder="Email address"
-              value={username}
-              onChange={handleUsernameChange}
-            />
-            <Input
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={handlePasswordChange}
-            />
-            <SubmitButton
-              type="submit"
-              value="Sign In"
-            />
-          </Form>
-        </Container>
-        }
-        {isbuttonClicked &&
-          <PrivateRoute path="/list" component={List} />
-        }
-      </Router>
-    );
-  }
+    <Container>
+      <Form onSubmit={handleSubmit}>
+        <Input
+          type="text"
+          placeholder="Username"
+          value={username}
+          onChange={handleUsernameChange}
+        />
+        <Error>
+          {errors.username}
+        </Error>
+        <Input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={handlePasswordChange}
+        />
+        <Error>
+          {errors.password}
+        </Error>
+        <SubmitButton
+          type="submit"
+          value="Sign In"
+        />
+      </Form>
+    </Container>
+  );
+}
   
-  export default Login;
+export default Login;
