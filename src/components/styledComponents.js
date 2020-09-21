@@ -1,8 +1,7 @@
 import styled from 'styled-components';
 
-const Card = styled.div`
+const Container = styled.div`
   box-sizing: border-box;
-  max-width: 410px;
   margin: 0 auto;
   padding: 0 2rem;
   display: flex;
@@ -19,8 +18,8 @@ const LoginContainer = styled.div`
   width: 100%;
 `;
 
-
-const Form = styled.div`
+const Form = styled.form`
+  max-width: 410px;
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -35,8 +34,7 @@ const Input = styled.input`
 
 const Button = styled.button`
   background-color: #e4200e;
-  border: 2px solid;
-  border-bottom-color:  #b81809;
+  border: 2px solid #b81809;
   border-radius: 2px;
   padding: 10px;
   color: white;
@@ -46,13 +44,24 @@ const Button = styled.button`
   font-size: 1rem;
 `;
 
-const Logo = styled.img`
-  width: 50%;
+const SubmitButton = styled.input`
+  background-color: #e4200e;
+  border: 2px solid #b81809;
+  border-radius: 2px;
+  padding: 10px;
+  color: white;
+  font-weight: 700;
+  width: 100%;
   margin-bottom: 1rem;
+  font-size: 1rem;
 `;
 
 const Error = styled.div`
-  background-color: red;
+  background-color: rgb(231, 231, 231);
+  border-radius: 5px;
+  /* padding: 15px; Add padding back in when logic to hide/show is added */
+  margin-bottom: 20px;
+  color: #e4200e;
 `;
 
-export { Form, Input, Button, Logo, Card, Error, LoginContainer };
+export { Form, Input, Button, SubmitButton, Container, Error, LoginContainer };
