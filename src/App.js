@@ -1,25 +1,41 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import { BrowserRouter as Router, Link, Route } from "react-router-dom";
+import { LoginContainer, Container, Button } from './components/styledComponents';
+import PrivateRoute from './PrivateRoute';
+import Login from "./pages/Login";
+import List from "./pages/List";
+import { AuthContext } from "./context/auth";
 
-function App() {
+function App(props) {
+
+  // Set Tokens for login authentition
+  const existingTokens = JSON.parse(localStorage.getItem("tokens"));
+  const [authTokens, setAuthTokens] = useState(existingTokens);
+  const setTokens = (data) => {
+    localStorage.setItem("tokens", JSON.stringify(data));
+    setAuthTokens(data);
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <AuthContext.Provider value={{ authTokens, setAuthTokens: setTokens }}>
+        <Router>
+          <div>
+            <LoginContainer>
+              <Link to="/login">
+                <Button renderAs="Link">
+                  <span>Login</span>
+                </Button>
+              </Link>
+            </LoginContainer>
+            <Container>
+              <h1>Holly Greene List-App</h1>
+            </Container>
+          </div>
+
+          <Route path ='/login' component={Login}/>
+          <PrivateRoute path="/list" component={List} />
+        </Router>
+      </AuthContext.Provider>
   );
 }
 
